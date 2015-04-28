@@ -12,15 +12,17 @@ end
 require 'rake'
 
 require 'jeweler'
+require './lib/towerist/version'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://guides.rubygems.org/specification-reference/ for more options
-  gem.name = "towerist"
-  gem.homepage = "http://github.com/zgs225/towerist"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "zgs225@gmail.com"
-  gem.authors = ["zgs225"]
+  gem.name        = "towerist"
+  gem.homepage    = "http://github.com/zgs225/towerist"
+  gem.license     = "MIT"
+  gem.summary     = %Q{Fetch data from tower}
+  gem.description = %Q{Fetch data from tower as a authenticated user}
+  gem.email       = "zgs225@gmail.com"
+  gem.authors     = ["zgs225"]
+  gem.version     = Towerist::Version::STRING
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "http://ruby.taobao.org"
 # Add dependencies required to use your gem here.
 # Example:
 #   gem "activesupport", ">= 2.3.5"
@@ -11,4 +11,8 @@ group :development do
   gem "bundler", "~> 1.0"
   gem "jeweler", "~> 2.0.1"
   gem "simplecov", ">= 0"
+  gem "byebug"
 end
+
+gem "nokogiri"
+gem "mechanize"

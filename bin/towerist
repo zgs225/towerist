@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'rubygems'
+require 'mechanize'
+require 'byebug'
+
+agent = Mechanize.new
+
+# simulate login
+login_page = agent.get 'https://tower.im/users/sign_in'
+login_form = login_page.forms.first
+
+login_form.email    = "zgs@ypjh.wang"
+login_form.password = "lucky665398"
+
+# submit
+agent.submit login_form
+
+# cache cookie
+tmp_cookie       = agent.cookie_jar
+agent.cookie_jar = tmp_cookie
+
+data_page = agent.get("https://tower.im/projects/7f1c0c045dd642cfb269f50005a05f99/messages/d3d9f64e45774437abadcd74990cfa1c/")
+
+pp data_page
