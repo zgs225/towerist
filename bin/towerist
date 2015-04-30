@@ -2,25 +2,32 @@
 # encoding: utf-8
 
 require 'rubygems'
-require 'mechanize'
+require 'nokogiri'
 require 'byebug'
+require 'cseg'
 
-agent = Mechanize.new
+data_source = File.expand_path 'data/source/tower.html', Dir.pwd
+reject_reg  = /(^\s*\d+$)|[：、？，！。的]|年\d+月|\d+日/
 
-# simulate login
-login_page = agent.get 'https://tower.im/users/sign_in'
-login_form = login_page.forms.first
+abort '数据源不存在' unless File.exists?(data_source)
 
-login_form.email    = "zgs@ypjh.wang"
-login_form.password = "lucky665398"
+# Fetch html data
+html = File.open data_source
+doc  = Nokogiri::HTML(html)
+html.close
 
-# submit
-agent.submit login_form
+# Parse comments
+comments = doc.xpath("//div[@class='comment-content editor-style']")
+abort '数据源中不存在数据' if comments.empty?
 
-# cache cookie
-tmp_cookie       = agent.cookie_jar
-agent.cookie_jar = tmp_cookie
+# Segment
+word_list = Hash.new(0)
+comments.each do |comment|
+  words = Kurumi.segment(comment.text.chomp.strip)
+                .reject { |word| word =~ reject_reg }
+                .compact
 
-data_page = agent.get("https://tower.im/projects/7f1c0c045dd642cfb269f50005a05f99/messages/d3d9f64e45774437abadcd74990cfa1c/")
+  words.each { |word| word_list[word] += 1 unless word =~ /^\s+$/ }
+end
 
-pp data_page
+p word_list.sort_by { |_, count| count }.reverse[2]
