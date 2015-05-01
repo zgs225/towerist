@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 require 'rubygems'
-require './lib/towerist'
+require 'towerist/data_source'
 require 'byebug'
 require 'cseg'
 
