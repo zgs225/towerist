@@ -2,22 +2,17 @@
 # encoding: utf-8
 
 require 'rubygems'
-require 'nokogiri'
+require './lib/towerist'
 require 'byebug'
 require 'cseg'
 
-data_source = File.expand_path 'data/source/tower.html', Dir.pwd
+data_source_path = File.expand_path 'data/source/tower.html', Dir.pwd
 reject_reg  = /(^\s*\d+$)|[：、？，！。的]|年\d+月|\d+日/
 
-abort '数据源不存在' unless File.exists?(data_source)
-
-# Fetch html data
-html = File.open data_source
-doc  = Nokogiri::HTML(html)
-html.close
+data_source = Towerist::DataSource.new data_source_path
 
 # Parse comments
-comments = doc.xpath("//div[@class='comment-content editor-style']")
+comments = data_source.provide
 abort '数据源中不存在数据' if comments.empty?
 
 # Segment

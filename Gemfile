@@ -17,4 +17,4 @@ end
 gem "nokogiri"
 gem "mechanize"
 gem "cseg"
-gem "obscenity"
+# gem "obscenity"
