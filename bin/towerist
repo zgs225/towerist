@@ -3,24 +3,16 @@
 
 require 'rubygems'
 require 'towerist/data_source'
+require 'towerist/statistics'
 require 'byebug'
-require 'cseg'
 
 data_source_path = File.expand_path 'data/source/tower.html', Dir.pwd
-reject_reg  = /(^\s*\d+$)|[：、？，！。的]|年\d+月|\d+日/
+# reject_reg  = /(^\s*\d+$)|[：、？，！。的]|年\d+月|\d+日/
 
 data_source = Towerist::DataSource.new data_source_path
 
-comments = data_source.provide
-
 # Segment
-word_list = Hash.new(0)
-comments.each do |comment|
-  words = Kurumi.segment(comment.text.chomp.strip)
-                .reject { |word| word =~ reject_reg }
-                .compact
-
-  words.each { |word| word_list[word] += 1 unless word =~ /^\s+$/ }
-end
+statistics_tool = Towerist::Statistics.new data_source
+word_list       = statistics_tool.segment
 
 p word_list.sort_by { |_, count| count }.reverse
