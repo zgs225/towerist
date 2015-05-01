@@ -14,7 +14,9 @@ module Towerist
     end
 
     def provide
-      @doc.xpath("//div[@class='comment-content editor-style']")
+      content = @doc.xpath("//div[@class='comment-content editor-style']")
+      abort '数据源中不存在数据' if content.empty?
+      content
     end
 
     private

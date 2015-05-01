@@ -11,9 +11,7 @@ reject_reg  = /(^\s*\d+$)|[：、？，！。的]|年\d+月|\d+日/
 
 data_source = Towerist::DataSource.new data_source_path
 
-# Parse comments
 comments = data_source.provide
-abort '数据源中不存在数据' if comments.empty?
 
 # Segment
 word_list = Hash.new(0)
