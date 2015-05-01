@@ -23,4 +23,4 @@ comments.each do |comment|
   words.each { |word| word_list[word] += 1 unless word =~ /^\s+$/ }
 end
 
-p word_list.sort_by { |_, count| count }.reverse[2]
+p word_list.sort_by { |_, count| count }.reverse
