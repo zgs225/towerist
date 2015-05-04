@@ -52,3 +52,4 @@ pkg
 *.log
 
 html/data/
+data/*.csv
