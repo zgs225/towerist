@@ -6,6 +6,7 @@ require 'towerist/data_source'
 require 'towerist/statistics'
 require 'csv'
 require 'fileutils'
+require 'yaml'
 require 'byebug'
 
 data_source_path = File.expand_path 'data/source/tower.html', Dir.pwd
@@ -15,6 +16,12 @@ data_source = Towerist::DataSource.new data_source_path
 # Segment
 statistics_tool = Towerist::Statistics.new data_source
 word_list       = statistics_tool.get_word_list.sort_by { |_, count| count }.reverse
+
+# filtering
+filter    = YAML.load_file 'filter.yml'
+whitelist = filter["whitelist"]
+
+word_list.reject! { |word, _| !whitelist.include?(word) }
 
 FileUtils.mkdir_p 'html/data'
 

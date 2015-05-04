@@ -16,14 +16,11 @@ module Towerist
       # Cache result
       return @word_list if @word_list
 
-      @original_word_list = Hash.new(0)
+      @word_list = Hash.new(0)
       data.each do |comment|
         words = Kurumi.segment(comment.text.chomp.strip).compact
-        words.each { |word| @original_word_list[word] += 1 }
+        words.each { |word| @word_list[word] += 1 }
       end
-
-      # Only collect words in whitelist
-      filtering
 
       @word_list
     end
@@ -37,10 +34,6 @@ module Towerist
 
     def data
       @data ||= @data_source.provide
-    end
-
-    def filtering
-      @word_list = []
     end
   end
 end
