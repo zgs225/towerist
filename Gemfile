@@ -15,6 +15,6 @@ group :development do
 end
 
 gem "nokogiri"
-gem "mechanize"
+# gem "mechanize"
 gem "cseg"
 # gem "obscenity"

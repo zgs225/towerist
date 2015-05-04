@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["zgs225"]
-  s.date = "2015-05-01"
+  s.date = "2015-05-04"
   s.description = "Fetch data from tower as a authenticated user"
   s.email = "zgs225@gmail.com"
   s.executables = ["towerist"]
@@ -30,11 +30,12 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/towerist",
     "data/source/tower.html",
-    "lib/towerist.rb",
-    "lib/towerist/fetch_data.rb",
+    "lib/towerist/data_source.rb",
+    "lib/towerist/statistics.rb",
     "lib/towerist/version.rb",
     "spec/spec_helper.rb",
-    "spec/towerist_spec.rb"
+    "spec/towerist_spec.rb",
+    "towerist.gemspec"
   ]
   s.homepage = "http://github.com/zgs225/towerist"
   s.licenses = ["MIT"]

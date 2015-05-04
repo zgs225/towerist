@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'data_source'
 require 'cseg'
 
 module Towerist
@@ -16,17 +15,32 @@ module Towerist
     def segment
       # Cache result
       return @word_list if @word_list
-      @word_list = Hash.new(0)
+
+      @original_word_list = Hash.new(0)
       data.each do |comment|
         words = Kurumi.segment(comment.text.chomp.strip).compact
-        words.each { |word| word_list[word] += 1 }
+        words.each { |word| @original_word_list[word] += 1 }
       end
+
+      # Only collect words in whitelist
+      filtering
+
+      @word_list
+    end
+    alias_method :get_word_list, :segment
+
+    def reset
+      @word_list = nil
     end
 
     private
 
     def data
       @data ||= @data_source.provide
+    end
+
+    def filtering
+      @word_list = []
     end
   end
 end

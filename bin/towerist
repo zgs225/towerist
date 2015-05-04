@@ -4,15 +4,28 @@
 require 'rubygems'
 require 'towerist/data_source'
 require 'towerist/statistics'
+require 'csv'
+require 'fileutils'
 require 'byebug'
 
 data_source_path = File.expand_path 'data/source/tower.html', Dir.pwd
-# reject_reg  = /(^\s*\d+$)|[：、？，！。的]|年\d+月|\d+日/
 
 data_source = Towerist::DataSource.new data_source_path
 
 # Segment
 statistics_tool = Towerist::Statistics.new data_source
-word_list       = statistics_tool.segment
+word_list       = statistics_tool.get_word_list.sort_by { |_, count| count }.reverse
 
-p word_list.sort_by { |_, count| count }.reverse
+FileUtils.mkdir_p 'html/data'
+
+CSV.open 'html/data/top10.csv', 'wb' do |csv|
+  csv << ['x', '出现次数']
+  word_list.first(10).each { |record| csv << record }
+end
+
+CSV.open 'html/data/data.csv', 'wb' do |csv|
+  csv << ['x', '出现次数']
+  word_list.each { |record| csv << record }
+end
+
+`open "./html/index.html"`
