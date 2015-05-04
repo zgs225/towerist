@@ -22,6 +22,9 @@ filter    = YAML.load_file 'filter.yml'
 whitelist = filter["whitelist"]
 styles    = filter["styles"]
 
+# 男女比例
+sex_ratio = word_list.select { |word, _| word == '男' || word == '女' }
+
 word_list.reject! { |word, _| !whitelist.include?(word) }
 
 # 按风格获取
@@ -49,6 +52,11 @@ CSV.open 'html/data/styles.csv', 'wb' do |csv|
   style_list.sort_by { |_, count| count }.reverse.each do |key, value|
     csv << [key, value]
   end
+end
+
+CSV.open 'html/data/sex.csv', 'wb' do |csv|
+  csv << sex_ratio.keys
+  csv << sex_ratio.values
 end
 
 `open "./html/index.html"`

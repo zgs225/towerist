@@ -10,6 +10,7 @@
     body {
       background-color: #eee;
       color: #2c3e50;
+      font-family: Georgia, 'Times New Roman', 'Songti SC', SimSun, serif;
     }
 
     .container {
@@ -20,17 +21,23 @@
       background-color: #fff;
       padding: 15px;
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>男女比例</h1>
+    <div id="sex-ratio"></div>
+  </div>
   <div class="container">
     <h1>最受欢迎的风格</h1>
     <div id="top10">
     </div>
   </div>
   <script>
-    var chart = c3.generate({
+    var chart_top10 = c3.generate({
         bindto: '#top10',
 
         data  : {
@@ -43,6 +50,14 @@
           x   : {
             type: 'category'
           }
+        }
+    });
+    var chart_sex = c3.generate({
+        bindto: '#sex-ratio',
+
+        data  : {
+          url : './data/sex.csv',
+          type: 'pie'
         }
     });
   </script>
