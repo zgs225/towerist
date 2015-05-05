@@ -36,6 +36,11 @@
     <div id="top10">
     </div>
   </div>
+  <div class="container">
+    <h1>所有标签</h1>
+    <div id="all">
+    </div>
+  </div>
   <script>
     var chart_top10 = c3.generate({
         bindto: '#top10',
@@ -59,6 +64,29 @@
           url : './data/sex.csv',
           type: 'pie'
         }
+    });
+
+    var chart_all = c3.generate({
+      bindto: '#all',
+
+      data  : {
+        x   : 'x',
+        url : './data/data.csv',
+        type: 'scatter'
+      },
+
+      axis  : {
+        x   : {
+          type: 'category',
+          show: false
+        }
+      },
+
+      point : {
+        r: function (d) {
+          return d.value;
+        }
+      }
     });
   </script>
 </body>
