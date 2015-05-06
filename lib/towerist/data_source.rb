@@ -5,7 +5,7 @@ module Towerist
   # 用来存放数据源信息
   class DataSource
     # 数据路径
-    attr_reader   :data_source_path, :doc
+    attr_reader :data_source_path, :doc
 
     def initialize(data_source_path)
       @data_source_path = data_source_path

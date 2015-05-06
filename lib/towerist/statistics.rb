@@ -4,8 +4,6 @@ require 'cseg'
 module Towerist
   class Statistics
     attr_reader   :word_list
-    # Towerist::DataSource
-    attr_accessor :data_source
 
     def initialize(data_source)
       @data_source = data_source

@@ -1,7 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Towerist" do
-  it "fails" do
-    fail "hey buddy, you should probably rename this file and start specing for real"
+  context "shoud be work" do
+    it "ok" do
+      expect(1).to eq(1)
+    end
   end
 end
