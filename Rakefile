@@ -50,3 +50,8 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+desc "Clean csv files"
+task :clean_csv do
+  rm_rf(Dir.glob(File.expand_path('./html/data/*.csv', File.dirname(__FILE__))))
+end

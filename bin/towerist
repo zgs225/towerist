@@ -18,7 +18,7 @@ data_source = Towerist::DataSource.new data_source_path
 
 # Segment
 statistics_tool = Towerist::Statistics.new data_source
-word_list       = statistics_tool.get_word_list
+word_list       = statistics_tool.word_list
 
 # filtering
 filter    = YAML.load_file 'filter.yml'
