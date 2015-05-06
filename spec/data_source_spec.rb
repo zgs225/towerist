@@ -3,9 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Towerist::DataSource do
   context "if data source is exists" do
-    before do
-      @data_source = Towerist::DataSource.new(File.expand_path 'data/source/tower.html', root)
-    end
+    before { @data_source = generate_data_source }
 
     it "should provide correct keywords" do
       @data = @data_source.provide
