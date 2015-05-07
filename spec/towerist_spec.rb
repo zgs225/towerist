@@ -7,8 +7,7 @@ describe "Towerist" do
 
   context "work correctly that" do
     it "should generate csv files" do
-      files = ['top10', 'data', 'styles', 'sex']
-      files.each do |file|
+      ['top10', 'data', 'styles', 'sex'].each do |file|
         expect(File.exist?("#{ root }/html/data/#{ file }.csv")).to be true
       end
     end

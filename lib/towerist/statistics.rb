@@ -4,10 +4,12 @@ require 'yaml'
 
 module Towerist
   class Statistics
-    attr_reader   :word_list, :__origin_word_list, :whitelist
+    attr_reader :word_list, :__origin_word_list, :whitelist
+    attr_reader :generators
 
     def initialize(data_source)
       @data_source = data_source
+      @generators  = []
       segment
     end
 
@@ -34,6 +36,19 @@ module Towerist
     # 获取白名单中的分词
     def word_list
       @word_list ||= @__origin_word_list.reject { |word| !whitelist.include?(word) }
+    end
+
+    # 向生成器数组中添加生成器
+    def add_generator(*generators)
+      (@generators << generators).flatten!
+    end
+    alias_method :add_generators, :add_generator
+
+    def start
+      @generators.each do |generator|
+        generator.generate
+      end
+      yield if block_given?
     end
 
     private
