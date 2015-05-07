@@ -7,9 +7,6 @@ require 'rubygems'
 
 Dir[File.expand_path('lib/towerist/**/*.rb', root)].each { |file| require file }
 
-require 'csv'
-require 'fileutils'
-require 'yaml'
 require 'byebug'
 
 data_source_path = File.expand_path 'data/source/tower.html', root
@@ -17,49 +14,11 @@ data_source_path = File.expand_path 'data/source/tower.html', root
 data_source = Towerist::DataSource.new data_source_path
 
 # Segment
-statistics_tool = Towerist::Statistics.new data_source
-word_list       = statistics_tool.word_list
+statistics = Towerist::Statistics.new data_source
 
-# filtering
-filter    = YAML.load_file 'filter.yml'
-whitelist = filter["whitelist"]
-styles    = filter["styles"]
+# Add generators
+statistics.add_generator Towerist::ScatterGenerator.new(statistics.word_list)
+statistics.add_generator Towerist::GenderGenerator.new(statistics.__origin_word_list)
+statistics.add_generator Towerist::StyleGenerator.new(statistics.word_list)
 
-# 男女比例
-sex_ratio = word_list.select { |word, _| word == '男' || word == '女' }
-
-word_list.reject! { |word, _| !whitelist.include?(word) }
-
-# 按风格获取
-style_list = Hash.new(0)
-styles.each do |key, array|
-  word_list.each do |word, count|
-    style_list[key] += count if array.include?(word)
-  end
-end
-
-FileUtils.mkdir_p 'html/data'
-
-CSV.open 'html/data/top10.csv', 'wb' do |csv|
-  csv << ['x', '出现次数']
-  word_list.first(10).each { |record| csv << record }
-end
-
-CSV.open 'html/data/data.csv', 'wb' do |csv|
-  csv << ['x', '出现次数']
-  word_list.each { |record| csv << record }
-end
-
-CSV.open 'html/data/styles.csv', 'wb' do |csv|
-  csv << ['x', '出现次数']
-  style_list.sort_by { |_, count| count }.reverse.each do |key, value|
-    csv << [key, value]
-  end
-end
-
-CSV.open 'html/data/sex.csv', 'wb' do |csv|
-  csv << sex_ratio.keys
-  csv << sex_ratio.values
-end
-
-`open "./html/index.html"`
+statistics.start { `open "#{ root }/html/index.html"` }

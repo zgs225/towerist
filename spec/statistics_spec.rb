@@ -41,17 +41,17 @@ describe Towerist::Statistics do
     end
 
     context "add generator to generators" do
-      before { @statistics.add_generator(Towerist::Generator.new) }
+      before { @statistics.add_generator(Towerist::Generator.new({})) }
 
       it "should can add a generator to generators" do
         expect do
-          @statistics.add_generator(Towerist::Generator.new)
+          @statistics.add_generator(Towerist::Generator.new({}))
         end.to change { @statistics.generators.length }.by(1)
       end
 
       it "shoud can add an array of generators into generators" do
         expect do
-          @statistics.add_generators([Towerist::Generator.new, Towerist::Generator.new])
+          @statistics.add_generators([Towerist::Generator.new({}), Towerist::Generator.new({})])
         end.to change { @statistics.generators.length }.by(2)
       end
 
